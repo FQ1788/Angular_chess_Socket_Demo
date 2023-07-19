@@ -1,0 +1,26 @@
+<div class="bg-dark vh-100">
+  <div class="container">
+      <div class="row">
+          
+        <!-- 切換選項 -->
+        <div class="col-2 border border-5 info my-3">
+          <div class="btn-group-vertical w-100">
+            <!-- routerLinkActive 為Router選擇器，若子元件內的routerLink有被選取，則增加指定class到元件內 -->
+            <a class="btn btn-outline-primary mt-3" routerLinkActive="active" routerLink="/openRoom">建立房間</a>
+            <a class="btn btn-outline-primary my-3" routerLinkActive="active" routerLink="/inRoom">加入房間</a>
+          </div>
+        </div>
+        
+        <!-- component 內容區塊 -->
+        <div class="col-10">
+          <!-- 使用 router 切換的內容 -->
+          <div class="row m-3">
+            <div class="col bg-light py-3">
+                <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>
