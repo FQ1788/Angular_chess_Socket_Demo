@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
 import { InRoomComponent } from './in-room/in-room.component';
 import { OpenRoomComponent } from './open-room/open-room.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     InRoomComponent,
-    OpenRoomComponent
+    OpenRoomComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,

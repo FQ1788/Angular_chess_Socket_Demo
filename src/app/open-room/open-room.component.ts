@@ -2,6 +2,8 @@ import { Player, Room } from './../../@module/room.model';
 import { HttpClient } from '@angular/common/http';
 import { RoomService } from '../../@service/room.service';
 import { Component, OnInit } from '@angular/core';
+import { PlaygameService } from 'src/@service/playgame.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-open-room',
@@ -10,21 +12,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OpenRoomComponent{
   
-  constructor(private roomService: RoomService){}
+  constructor(private roomService: RoomService, private router:Router){}
 
-  addRoom(username:string){
-    if(username && username.trim().length){
+  addRoom(playName:string){
+    if(playName && playName.trim().length){
       let player : Player = {
         roomNumber : '',
-        player : username,
+        player : playName,
         coordinate : []
       };
       this.roomService._addRoom(player).subscribe(room => {
         console.log(room.operateCode);
-        console.log(room.roomNumber);
-        console.log(room.chessboard);
-        console.log(room.playerOne);
-        console.log(room.playerTwo);
+        if(room.operateCode == '200'){
+          this.roomService.room = room;
+          this.roomService.player = playName;
+          this.router.navigateByUrl('/game');
+        }
       });
     }else{
       alert('請輸入玩家名稱');

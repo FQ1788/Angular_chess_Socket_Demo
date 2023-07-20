@@ -1,4 +1,5 @@
-import { Room } from 'src/@module/room.model';
+import { GameComponent } from './../app/game/game.component';
+import { Player, Room } from 'src/@module/room.model';
 import { Injectable } from '@angular/core';
 //使用 WebSocket 需要引入以下兩個套件。
 import * as Stomp from 'stompjs';
@@ -7,16 +8,22 @@ import * as SockJS from 'sockjs-client';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PlaygameService {
   webSocketEndPoint: string = 'http://localhost:8080/ws';
 
   roomOut: string = '/out/';
-  roomNumber: String;
+
+  player!: string;
+
+  room!: Room;
 
   stompClient: any;
 
-  constructor(roomNumber: String) { 
-    this.roomNumber = roomNumber;
+  gameComponent!:GameComponent;
+
+  constructor(gameComponent:GameComponent){
+    this.gameComponent = gameComponent;
   }
 
   _connect(){
@@ -27,11 +34,15 @@ export class PlaygameService {
     
     const _this = this;
 
-    let roomUrl = this.roomOut + this.roomNumber;
+    let roomUrl = this.roomOut + this.room.roomNumber;
 
     _this.stompClient.connect({},function (frame:any){
       _this.stompClient.subscribe(roomUrl, function(result: any){
-        let room: Room = result.body;
+        let room: Room = JSON.parse(result.body);
+        if(room.operateCode == "200"){
+          _this.room = room;
+          _this.gameComponent.setRoom(_this.room);
+        }
       });
     },this._errorConnect);
   };
@@ -47,7 +58,12 @@ export class PlaygameService {
     console.log('連線異常!! => ' + error);
   }
 
-  _inRoom(username: string, roomNumber: string){
-    this.stompClient.send('/chess/playerAction/' + roomNumber, {}, JSON.stringify({"username" : username,"roomNumber":roomNumber}));
+  _playerAction(y:number, x:number){
+    let player: Player = {
+      roomNumber: this.room.roomNumber,
+      player: this.player,
+      coordinate: [y,x]
+    }
+    this.stompClient.send('/chess/playerAction/' + this.room.roomNumber, {}, JSON.stringify(player));
   }
 }

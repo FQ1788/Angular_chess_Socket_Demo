@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                <h2>房間代碼:{{this.room.roomNumber}}</h2>
+            </div>
+            <div class="row">
+                <h2>目前輪到 : {{this.room.operator}} 玩家操作</h2>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row"><h2>玩家 : {{this.room.playerOne}}</h2></div>
+            <div class="row"><h2>玩家 : {{this.room.playerTwo}}</h2></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="input-group" *ngFor="let row of this.room.chessboard; let y = index">
+        <button class="btn border border-dark" [ngClass]="checkPush(chess.push)" (click)="playerAction(y,x)" *ngFor="let chess of row; let x = index">
+            <img src="assets/img/{{chess.chessNo}}.png">
+        </button>
+    </div>
+</div>

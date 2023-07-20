@@ -1,6 +1,8 @@
+import { PlaygameService } from './../../@service/playgame.service';
 import { Player } from './../../@module/room.model';
 import { Component } from '@angular/core';
 import { RoomService } from 'src/@service/room.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-in-room',
@@ -9,7 +11,7 @@ import { RoomService } from 'src/@service/room.service';
 })
 export class InRoomComponent {
 
-  constructor(private roomService: RoomService){}
+  constructor(private roomService: RoomService,private router: Router){}
   
   inRoom(roomNumber: string ,playName: string){
     
@@ -26,10 +28,11 @@ export class InRoomComponent {
 
       this.roomService._inRoom(player).subscribe(room => {
         console.log(room.operateCode);
-        console.log(room.roomNumber);
-        console.log(room.chessboard);
-        console.log(room.playerOne);
-        console.log(room.playerTwo);
+        if(room.operateCode == '200'){
+          this.roomService.room = room;
+          this.roomService.player = playName;
+          this.router.navigateByUrl('/game');
+        }
       });
     }
   }

@@ -4,6 +4,7 @@ export interface Room{
     playerOne: string,
     playerTwo: string,
     operateCode: string,
+    operator: string,
     chessboard: Chess[][]
 }
 

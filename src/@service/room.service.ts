@@ -7,6 +7,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoomService {
 
+  room!:Room;
+
+  player!:string;
+
   addRoomUrl: string = '/api/addRoom';
   
   inRoomUrl: string = '/api/inRoom';
