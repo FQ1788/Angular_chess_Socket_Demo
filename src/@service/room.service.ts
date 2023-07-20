@@ -15,6 +15,8 @@ export class RoomService {
   
   inRoomUrl: string = '/api/inRoom';
 
+  removeRoomUrl: string = '/api/removeRoom';
+
   constructor(private http:HttpClient) {}
 
   _addRoom(player:Player){
@@ -23,5 +25,16 @@ export class RoomService {
 
   _inRoom(player:Player){
     return this.http.post<Room>(this.inRoomUrl,player);
+  }
+
+  _removeRoom(){
+    let play: Player = {
+      roomNumber: this.room.roomNumber,
+      player: this.player,
+      coordinate: []
+    }
+    console.log('roomNumber : ' + play.roomNumber);
+    console.log('player : ' + play.player);
+    return this.http.post(this.removeRoomUrl,play);
   }
 }

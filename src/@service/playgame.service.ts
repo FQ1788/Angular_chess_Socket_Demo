@@ -10,7 +10,7 @@ import * as SockJS from 'sockjs-client';
 })
 
 export class PlaygameService {
-  webSocketEndPoint: string = 'http://localhost:8080/ws';
+  webSocketEndPoint: string = 'http://172.20.27.74:8080/ws';
 
   roomOut: string = '/out/';
 
@@ -42,6 +42,8 @@ export class PlaygameService {
         if(room.operateCode == "200"){
           _this.room = room;
           _this.gameComponent.setRoom(_this.room);
+        }else if(room.operateCode == "100"){
+          _this.gameComponent.toIndex();
         }
       });
     },this._errorConnect);
@@ -65,5 +67,14 @@ export class PlaygameService {
       coordinate: [y,x]
     }
     this.stompClient.send('/chess/playerAction/' + this.room.roomNumber, {}, JSON.stringify(player));
+  }
+
+  _restartGame(){
+    let player:Player = {
+      roomNumber: this.room.roomNumber,
+      player: this.player,
+      coordinate: []
+    }
+    this.stompClient.send('/chess/restartGame/' + this.room.roomNumber, {}, JSON.stringify(player));
   }
 }

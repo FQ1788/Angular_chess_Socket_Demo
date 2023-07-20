@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { RoomService } from 'src/@service/room.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Room } from 'src/@module/room.model';
 import { PlaygameService } from 'src/@service/playgame.service';
 
@@ -8,7 +9,7 @@ import { PlaygameService } from 'src/@service/playgame.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit{
+export class GameComponent implements OnInit,OnDestroy{
 
   room!:Room;
 
@@ -16,7 +17,11 @@ export class GameComponent implements OnInit{
 
   gameService!: PlaygameService;
 
-  constructor(private roomService:RoomService){}
+  constructor(private roomService:RoomService,private router:Router){}
+
+  ngOnDestroy(): void {
+    this.gameService._disconnect();
+  }
 
   ngOnInit(): void {
     this.gameService = new PlaygameService(this);
@@ -42,5 +47,17 @@ export class GameComponent implements OnInit{
     }else{
       return "NotPush";
     }
+  }
+
+  toIndex(){
+    this.router.navigateByUrl('/index');
+  }
+  
+  exitRoom(){
+    this.roomService._removeRoom().subscribe({});
+  }
+
+  restart(){
+    this.gameService._restartGame();
   }
 }

@@ -5,7 +5,8 @@ export interface Room{
     playerTwo: string,
     operateCode: string,
     operator: string,
-    chessboard: Chess[][]
+    chessboard: Chess[][],
+    dieChess: string[]
 }
 
 export interface Chess{
