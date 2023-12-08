@@ -24,7 +24,16 @@
             </div>
         </div>
         <div class="col-3">
-            
+            <div class="row overflow-auto chatRow border" #scrollMe>
+                <div class="d-flex flex-column justify-content-end">
+                  <div class="row border" *ngFor="let item of greeting">
+                    <a>{{item}}</a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <input type="text" #inText (keyup.enter)="sendMessage(inText);">
+              </div>
         </div>
     </div>
 </div>
