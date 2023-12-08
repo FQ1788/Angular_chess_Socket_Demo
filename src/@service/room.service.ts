@@ -11,11 +11,15 @@ export class RoomService {
 
   player!:string;
 
+  watchGame:boolean = false;
+
   addRoomUrl: string = '/api/addRoom';
   
   inRoomUrl: string = '/api/inRoom';
 
   removeRoomUrl: string = '/api/removeRoom';
+  
+  watchRoomUrl: string = '/api/watchRoom';
 
   constructor(private http:HttpClient) {}
 
@@ -36,5 +40,9 @@ export class RoomService {
     console.log('roomNumber : ' + play.roomNumber);
     console.log('player : ' + play.player);
     return this.http.post(this.removeRoomUrl,play);
+  }
+
+  _watchRoom(player:Player){
+    return this.http.post<Room>(this.watchRoomUrl,player);
   }
 }

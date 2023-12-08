@@ -18,6 +18,8 @@ export class PlaygameService {
 
   room!: Room;
 
+  watchGame:boolean = false;
+
   stompClient: any;
 
   gameComponent!:GameComponent;
@@ -66,7 +68,9 @@ export class PlaygameService {
       player: this.player,
       coordinate: [y,x]
     }
-    this.stompClient.send('/chess/playerAction/' + this.room.roomNumber, {}, JSON.stringify(player));
+    if(!this.watchGame){
+      this.stompClient.send('/chess/playerAction/' + this.room.roomNumber, {}, JSON.stringify(player));
+    }
   }
 
   _restartGame(){
@@ -75,6 +79,8 @@ export class PlaygameService {
       player: this.player,
       coordinate: []
     }
-    this.stompClient.send('/chess/restartGame/' + this.room.roomNumber, {}, JSON.stringify(player));
+    if(!this.watchGame){
+      this.stompClient.send('/chess/restartGame/' + this.room.roomNumber, {}, JSON.stringify(player));
+    }
   }
 }

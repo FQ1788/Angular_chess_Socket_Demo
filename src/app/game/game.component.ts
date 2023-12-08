@@ -17,6 +17,8 @@ export class GameComponent implements OnInit,OnDestroy{
 
   gameService!: PlaygameService;
 
+  watchGame: boolean = this.roomService.watchGame;
+
   constructor(private roomService:RoomService,private router:Router){}
 
   ngOnDestroy(): void {
@@ -27,6 +29,7 @@ export class GameComponent implements OnInit,OnDestroy{
     this.gameService = new PlaygameService(this);
     this.gameService.room = this.roomService.room;
     this.gameService.player = this.roomService.player;
+    this.gameService.watchGame = this.roomService.watchGame;
     this.room = this.gameService.room; 
     this.gameService._connect();
   }
@@ -54,7 +57,12 @@ export class GameComponent implements OnInit,OnDestroy{
   }
   
   exitRoom(){
-    this.roomService._removeRoom().subscribe({});
+    if(this.watchGame){
+      this.gameService._disconnect();
+      this.toIndex();
+    }else{
+      this.roomService._removeRoom().subscribe({});
+    }
   }
 
   restart(){

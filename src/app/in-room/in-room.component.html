@@ -11,14 +11,18 @@
             房間名稱 : <input type="text" #roomInput>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-6">
             玩家名稱 : <input type="text" #playerInput>
         </div>
     </div>
     <div class="row justify-content-end">
-        <div class="col-2">
+        <div class="col-2 btn-col">
             <button class="btn btn-dark" (click)="inRoom(roomInput.value,playerInput.value)">加入房間</button>
+        </div>
+        <div class="col-2 btn-col">
+            <button class="btn btn-dark" (click)="watchGame(roomInput.value)">吃瓜群眾</button>
         </div>
     </div>
 </div>

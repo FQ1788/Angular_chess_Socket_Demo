@@ -26,6 +26,7 @@ export class OpenRoomComponent{
         if(room.operateCode == '200'){
           this.roomService.room = room;
           this.roomService.player = playName;
+          this.roomService.watchGame = false;
           this.router.navigateByUrl('/game');
         }
       });

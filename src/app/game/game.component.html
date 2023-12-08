@@ -15,10 +15,17 @@
     </div>
 </div>
 <div class="container">
-    <div class="input-group" *ngFor="let row of this.room.chessboard; let y = index">
-        <button class="btn border border-dark" [ngClass]="checkPush(chess.push)" (click)="playerAction(y,x)" *ngFor="let chess of row; let x = index">
-            <img src="assets/img/{{chess.chessNo}}.png">
-        </button>
+    <div class="row">
+        <div class="col-9">
+            <div class="input-group" *ngFor="let row of this.room.chessboard; let y = index">
+                <button class="btn border border-dark" [ngClass]="checkPush(chess.push)" (click)="playerAction(y,x)" *ngFor="let chess of row; let x = index">
+                    <img src="assets/img/{{chess.chessNo}}.png">
+                </button>
+            </div>
+        </div>
+        <div class="col-3">
+            
+        </div>
     </div>
 </div>
 <div class="container my-3">
@@ -32,7 +39,7 @@
             </div>
         </div>
         <div class="d-grid gap-2 col-3 mx-auto">
-            <button class="btn btn-dark" type="button" (click)="restart();">重新開始</button>
+            <button class="btn btn-dark" type="button" (click)="restart();" [hidden]="watchGame">重新開始</button>
             <button class="btn btn-dark" type="button" (click)="exitRoom();">退出房間</button>
         </div>
     </div>
